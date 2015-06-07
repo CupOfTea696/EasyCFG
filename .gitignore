@@ -5,5 +5,4 @@ composer.lock
 Thumbs.db
 .idea
 .stfolder
-_site
 .sass-cache
