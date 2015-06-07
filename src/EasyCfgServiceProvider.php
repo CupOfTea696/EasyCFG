@@ -51,7 +51,7 @@ class EasyCfgServiceProvider extends ServiceProvider
             __DIR__.'/../config/easycfg.php', 'easycfg'
         );
         
-        $this->app->bindShared(ProviderContract::class, EasyCfg::class);
+        $this->app->singleton(ProviderContract::class, EasyCfg::class);
     }
     
     /**
