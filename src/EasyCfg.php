@@ -20,7 +20,7 @@ class EasyCfg implements ProviderContract
      * @const string
      */
     const PACKAGE = 'CupOfTea/EasyCfg';
-    const VERSION = '0.0.0';
+    const VERSION = '1.0.0';
     
     protected $all = [];
     protected $cfg = [];
