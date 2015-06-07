@@ -10,8 +10,8 @@ EasyCFG is a Configuration Manager for Laravel 5. It provides an easy way to sav
  - Documentation
  - API Reference
 
-<!--(http://easycfg.cupoftea.io/docs/)-->
-<!--(http://easycfg.cupoftea.io/docs/api/)-->
+<!-- (http://easycfg.cupoftea.io/docs/) -->
+<!-- (http://easycfg.cupoftea.io/docs/api/) -->
 
 ## Quickstart
 
