@@ -36,8 +36,8 @@ class EasyCfgServiceProvider extends ServiceProvider
         ], 'migrations');
         
         $this->publishes([
-            __DIR__ . '/../config/easycfg.php' => config_path('easycfg.php'),
-        ], 'cfg');
+            __DIR__.'/../config/easycfg.php' => config_path('easycfg.php'),
+        ], 'config');
     }
     
     /**
