@@ -109,11 +109,11 @@ class EasyCfg implements ProviderContract
             }
         } elseif ($id === null) {
             if (isset($this->all[$k])){
-                unset($this->all[$k])
+                unset($this->all[$k]);
             }
         } else {
             if (isset($this->cfg_id[$k]) && isset($this->cfg_id[$k][$id])) {
-                unset($this->cfg_id[$k][$id])
+                unset($this->cfg_id[$k][$id]);
             }
         }
     }
