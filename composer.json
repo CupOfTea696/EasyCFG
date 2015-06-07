@@ -1,6 +1,6 @@
 {
     "name": "cupoftea/easycfg",
-    "descriotion": "Easily add configuration data to your Eloquent Models or Application in Laravel 5!",
+    "description": "Easily add configuration data to your Eloquent Models or Application in Laravel 5!",
     "keywords": ["configuration", "config", "laravel", "meta", "metadata", "eloquent"],
     "require": {
         "cupoftea/package": "^1.2"
