@@ -3,7 +3,9 @@
 use CupOfTea\EasyCfg\EasyCfg;
 use CupOfTea\EasyCfg\Contracts\Provider as ProviderContract;
 
-class EasyCfgServiceProvider
+use Illuminate\Support\ServiceProvider;
+
+class EasyCfgServiceProvider extends ServiceProvider
 {
     
     /**
@@ -24,7 +26,7 @@ class EasyCfgServiceProvider
     
     /**
      * Bootstrap the application events.
-     * 
+     *
      * @return void
      */
     public function boot()
