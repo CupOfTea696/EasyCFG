@@ -1,0 +1,43 @@
+# Site settings
+
+project:
+    name: "EasyCFG"
+    alt_name: "EasyCFG"
+    tagline: Easily add configuration data to your Eloquent Models or Application in Laravel 5!
+    author: "CupOfTea696"
+    github: "https://github.com/CupOfTea696/EasyCFG/"
+    package: "cupoftea/easycfg"
+navigation:
+  - name: Documentation
+    url: "docs"
+    navigation:
+      - name: Getting Started
+        type: category
+      - name: Installation
+        type: page
+        url: "installation"
+  - name: API
+    url: "docs/api"
+url: "http://easycfg.cupoftea.io"
+twitter_username: CupOfTea696
+github_username:  CupOfTea696
+
+# Build settings
+markdown: redcarpet
+redcarpet:
+  extensions: ['no_intra_emphasis', 'with_toc_data', 'html_toc', 'strikethrough', 'autolink', 'tables', 'footnotes', 'underline']
+highlighter: pygments
+pygments_options: ['startinline']
+gems:
+  - jekyll-assets
+  - nokogiri
+  - octopress-minify-html
+assets:
+  dirname: assets
+  base_url: assets/
+  cachebust: soft
+  js_compressor: uglifier
+  css_compressor: sass
+  gzip: [ text/css, application/javascript ]
+  sources:
+    - _assets
