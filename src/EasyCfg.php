@@ -1,6 +1,7 @@
 <?php namespace CupOfTea\EasyCfg;
 
 use DB;
+use Closure;
 
 use CupOfTea\Package\Package;
 use CupOfTea\EasyCfg\Exceptions\InvalidKeyException;
@@ -72,8 +73,8 @@ class EasyCfg implements ProviderContract
     protected function mapAll($all)
     {
         $map = [];
-        foreach ($all as $key => $value) {
-            $map[$key] = $this->value($value);
+        foreach ($all as $result) {
+            $map[$this->key($result)] = $this->value($result);
         }
         
         return $map;
@@ -96,6 +97,28 @@ class EasyCfg implements ProviderContract
     }
     
     /**
+     * @param $k
+     * @param $id
+     * @return null
+     */
+    protected function unsetValues($k, $id)
+    {
+        if ($k === null) {
+            if (isset($this->all[Application::class])) {
+                unset($this->all[Application::class]);
+            }
+        } elseif ($id === null) {
+            if (isset($this->all[$k])){
+                unset($this->all[$k])
+            }
+        } else {
+            if (isset($this->cfg_id[$k]) && isset($this->cfg_id[$k][$id])) {
+                unset($this->cfg_id[$k][$id])
+            }
+        }
+    }
+    
+    /**
      * @param $key
      * @param $configurable
      * @param $configurable_id
@@ -113,15 +136,51 @@ class EasyCfg implements ProviderContract
     }
     
     /**
+     * @param $key
+     * @param $configurable
+     * @param $configurable_id
+     * @return null
+     */
+    protected function unsetValue($key, $configurable, $configurable_id)
+    {
+        $k = $configurable ? $configurable . ':' . $key : $key;
+        
+        if ($configurable_id !== null) {
+            if (isset($this->cfg_id[$k]) && isset($this->cfg_id[$k][$configurable_id])) {
+                unset($this->cfg_id[$k][$configurable_id]);
+            }
+        } else {
+            if (isset($this->cfg[$k])){
+                unset($this->cfg[$k]);
+            }
+        }
+    }
+    
+    /**
      * @param $value
      * @return mixed
      */
-    protected function value($value)
+    protected function key($result)
     {
-        if (is_callable($value)) {
-            $value = $value();
+        if ($result === null || !isset($result->key)) {
+            return null;
         }
-
+        
+        return $result->key;
+    }
+    
+    /**
+     * @param $value
+     * @return mixed
+     */
+    protected function value($result)
+    {
+        if ($result === null || !isset($result->value)) {
+            return null;
+        } else {
+            $value = $result->value;
+        }
+        
         $json = json_decode($value);
         
         return $json ? $json : (string)$value;
@@ -144,14 +203,14 @@ class EasyCfg implements ProviderContract
                 ->whereNull('configurable')
                 ->get();
             
-            return $this->all[Application::class] = mapAll($result);
+            return $this->all[Application::class] = $this->mapAll($result);
         } elseif ($configurable_id === null) {
             $result = DB::table(config('easycfg.table'))
                 ->where('configurable', $configurable)
                 ->whereNull('configurable_id')
                 ->get();
             
-            return $this->all[$configurable] = mapAll($result);
+            return $this->all[$configurable] = $this->mapAll($result);
         } else {
             $result = DB::table(config('easycfg.table'))
                 ->where('configurable', $configurable)
@@ -162,7 +221,7 @@ class EasyCfg implements ProviderContract
                 })
                 ->get();
             
-            return $this->all_id[$configurable][$configurable_id] = mapAll($result);
+            return $this->all_id[$configurable][$configurable_id] = $this->mapAll($result);
         }
     }
     
@@ -183,8 +242,7 @@ class EasyCfg implements ProviderContract
                 ->select('value')
                 ->where('key', $key)
                 ->whereNull('configurable')
-                ->first()
-                ->value;
+                ->first();
             
             return $this->cfg[$key] = $this->value($result);
         } elseif ($configurable_id === null) {
@@ -193,8 +251,7 @@ class EasyCfg implements ProviderContract
                 ->where('key', $key)
                 ->where('configurable', $configurable)
                 ->whereNull('configurable_id')
-                ->first()
-                ->value;
+                ->first();
             
             return $this->cfg[$configurable . ':' . $key] = $this->value($result);
         } else {
@@ -203,8 +260,7 @@ class EasyCfg implements ProviderContract
                 ->where('key', $key)
                 ->where('configurable', $configurable)
                 ->where('configurable_id', $configurable_id)
-                ->first()
-                ->value;
+                ->first();
             
             return $this->cfg_id[$configurable . ':' . $key][$configurable_id] = $this->value($result);
         }
@@ -224,9 +280,15 @@ class EasyCfg implements ProviderContract
             throw new InvalidKeyException('The Configuration key is too long (max length is 128 characters).');
         }
         
+        if ($value instanceof Closure) {
+            $value = $value();
+        }
+        
         if (is_array($value) || is_object($value)) {
             $value = json_encode($value);
         }
+        
+        $value = (string)$value;
         
         if ($configurable === null) {
             if ($this->get($key)) {
@@ -268,6 +330,8 @@ class EasyCfg implements ProviderContract
         $configurable_id = $this->getConfigurableId($configurable, $configurable_id);
         $configurable = $this->getConfigurable($configurable);
         
+        $this->unsetValue($key, $configurable, $configurable_id);
+        
         if ($configurable === null) {
             return DB::table(config('easycfg.table'))
                 ->where('key', $key)
@@ -295,6 +359,8 @@ class EasyCfg implements ProviderContract
     {
         $configurable_id = $this->getConfigurableId($configurable, $configurable_id);
         $configurable = $this->getConfigurable($configurable);
+        
+        $this->unsetValues($configurable, $configurable_id);
         
         if ($configurable === null) {
             return DB::table(config('easycfg.table'))
