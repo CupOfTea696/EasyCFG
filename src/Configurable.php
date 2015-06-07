@@ -9,10 +9,28 @@ use CupOfTea\EasyCfg\Contracts\Provider as ProviderContract;
 trait Configurable
 {
     
+    public $_cupoftea_easy_cfg = [];
+    private $_cupoftea_easy_cfg_observing = false;
+    
     protected $fields = [];
     
     /**
-	 * Dynamically retrieve attributes on the model.
+	 * Delete the model from the database.
+	 *
+	 * @return bool|null
+	 * @throws \Exception
+	 */
+	public function delete()
+    {
+        if (is_a($this, Model::class)) {
+            App::make(ProviderContract::class)->deleteAll(get_class($this), $this->primaryKey);
+        }
+        
+        return parent::delete();
+    }
+    
+    /**
+	 * Dynamically retrieve attributes on the Class.
 	 *
 	 * @param  string  $key
 	 * @return mixed
@@ -29,14 +47,15 @@ trait Configurable
         
         $cfg = App::make(ProviderContract::class);
         
-        if (isset($this->id)) {
-            return $cfg->get($key, get_class($this), $this->id);
+        if (isset($this->id) || isset($this->primaryKey)) {
+            return $cfg->get($key, get_class($this), isset($this->primaryKey) ? $this->primaryKey : $this->id);
         } else {
             return $cfg->get($key, get_class($this));
         }
 	}
+    
 	/**
-	 * Dynamically set attributes on the model.
+	 * Dynamically set attributes on the Class.
 	 *
 	 * @param  string  $key
 	 * @param  mixed   $value
@@ -49,18 +68,71 @@ trait Configurable
             return;
         }
         
-        if (is_a($this, Model::class) && in_array($key, $fields)) {
+        if (is_a($this, Model::class) && in_array($key, $this->fields)) {
             $this->setAttribute($key, $value);
             return;
         }
         
         $cfg = App::make(ProviderContract::class);
         
-        if (isset($this->id)) {
-            return $cfg->set($key, $value, get_class($this), $this->id);
+        if (is_a($this, Model::class) && !config('easycfg.autosave')) {
+            $this->_cupoftea_easy_cfg[$key] = $value;
+            
+            if (!$this->_cupoftea_easy_cfg_observing) {
+                $this->saved(function($model) use ($cfg) {
+                    foreach($model->_cupoftea_easy_cfg as $key => $value) {
+                        if ($value === null) {
+                            $cfg->delete($key, get_class($model), $model->primaryKey);
+                        } else {
+                            $cfg->set($key, $value, get_class($model), $model->primaryKey);
+                        }
+                    }
+                });
+                
+                $this->_cupoftea_easy_cfg_observing = true;
+            }
         } else {
-            return $cfg->set($key, $value, get_class($this));
+            if (isset($this->id) || isset($this->primaryKey)) {
+                return $cfg->set($key, $value, get_class($this), isset($this->primaryKey) ? $this->primaryKey : $this->id);
+            } else {
+                return $cfg->set($key, $value, get_class($this));
+            }
         }
 	}
+    
+    /**
+	 * Dynamically remove attributes on the Class.
+	 *
+	 * @param  string  $key
+	 * @return mixed
+	 */
+    function __unset($key)
+    {
+        $cfg = App::make(ProviderContract::class);
+        
+        if (is_a($this, Model::class) && !config('easycfg.autosave')) {
+            $this->_cupoftea_easy_cfg[$key] = null;
+            
+            if (!$this->_cupoftea_easy_cfg_observing) {
+                $this->saved(function($model) use ($cfg) {
+                    foreach($model->_cupoftea_easy_cfg as $key => $value) {
+                        if ($value === null) {
+                            $cfg->delete($key, get_class($model), $model->primaryKey);
+                        } else {
+                            $cfg->set($key, $value, get_class($model), $model->primaryKey);
+                        }
+                    }
+                });
+                
+                $this->_cupoftea_easy_cfg_observing = true;
+            }
+        } else {
+            if (isset($this->id) || isset($this->primaryKey)) {
+                return $cfg->delete($key, get_class($this), isset($this->primaryKey) ? $this->primaryKey : $this->id);
+            } else {
+                return $cfg->delete($key, get_class($this));
+            }
+        }
+    }
     
 }
