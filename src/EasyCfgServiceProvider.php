@@ -24,12 +24,15 @@ class EasyCfgServiceProvider
     
     /**
      * Bootstrap the application events.
-     *
-     * @param  \CupOfTea\TwoStream\Routing\WsRouter  $router
+     * 
      * @return void
      */
     public function boot()
     {
+        $this->publishes([
+            __DIR__.'/../database/migrations/' => base_path('/database/migrations')
+        ], 'migrations');
+        
         $this->publishes([
             __DIR__ . '/../config/easycfg.php' => config_path('easycfg.php'),
         ], 'cfg');
@@ -46,12 +49,6 @@ class EasyCfgServiceProvider
             __DIR__.'/../config/easycfg.php', 'easycfg'
         );
         
-        $this->app->bindShared('command.twostream.listen', function($app){
-            return new Server($app);
-        });
-        
-        $this->commands($this->commands);
-        
         $this->app->bindShared(ProviderContract::class, EasyCfg::class);
     }
     
@@ -63,8 +60,7 @@ class EasyCfgServiceProvider
     public function provides()
     {
         return [
-            'CupOfTea\TwoStream\Contracts\Factory',
-            'CupOfTea\TwoStream\Contracts\Session\ReadOnly',
+            ProviderContract::class,
         ];
     }
     
