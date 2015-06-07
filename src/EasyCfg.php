@@ -220,6 +220,8 @@ class EasyCfg implements ProviderContract
         
         if (str_contains($key, ':')) {
             throw new InvalidKeyException('The character \':\' is not allowed in the Configuration key.');
+        } elseif (strlen($key) > 128) {
+            throw new InvalidKeyException('The Configuration key is too long (max length is 128 characters).');
         }
         
         if (is_array($value) || is_object($value)) {
