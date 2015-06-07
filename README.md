@@ -7,8 +7,11 @@
 
 EasyCFG is a Configuration Manager for Laravel 5. It provides an easy way to save Configuration data (or Metadata) on your Application, a Class or an Object. Some use cases are User Settings and dynamic Application Configuration (e.g. in an Admin Panel).
 
- - [Documentation]()<!--(http://easycfg.cupoftea.io/docs/)-->
- - [API Reference]()<!--(http://easycfg.cupoftea.io/docs/api/)-->
+ - [Documentation]()
+ - [API Reference]()
+
+<!--(http://easycfg.cupoftea.io/docs/)-->
+<!--(http://easycfg.cupoftea.io/docs/api/)-->
 
 ## Quickstart
 
