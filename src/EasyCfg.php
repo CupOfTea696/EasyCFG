@@ -83,9 +83,9 @@ class EasyCfg implements ProviderContract
     /**
      * @param $k
      * @param $id
-     * @return null
+     * @return mixed
      */
-    protected function getValues($k, $id)
+    protected function getValues($k = null, $id = null)
     {
         if ($k === null) {
             return isset($this->all[Application::class]) ? $this->all[Application::class] : null;
@@ -99,9 +99,9 @@ class EasyCfg implements ProviderContract
     /**
      * @param $k
      * @param $id
-     * @return null
+     * @return void
      */
-    protected function unsetValues($k, $id)
+    protected function unsetValues($k = null, $id = null)
     {
         if ($k === null) {
             if (isset($this->all[Application::class])) {
@@ -122,9 +122,9 @@ class EasyCfg implements ProviderContract
      * @param $key
      * @param $configurable
      * @param $configurable_id
-     * @return null
+     * @return mixed
      */
-    protected function getValue($key, $configurable, $configurable_id)
+    protected function getValue($key, $configurable = null, $configurable_id = null)
     {
         $k = $configurable ? $configurable . ':' . $key : $key;
         
@@ -139,9 +139,27 @@ class EasyCfg implements ProviderContract
      * @param $key
      * @param $configurable
      * @param $configurable_id
-     * @return null
+     * @return mixed
      */
-    protected function unsetValue($key, $configurable, $configurable_id)
+    protected function setValue($key, $result, $configurable = null, $configurable_id = null)
+    {
+        $k = $configurable ? $configurable . ':' . $key : $key;
+        $value = $this->value($result);
+        
+        if ($configurable_id !== null) {
+            return $this->cfg_id[$k][$configurable_id] = $value;
+        } else {
+            return $this->cfg[$k] = $value;
+        }
+    }
+    
+    /**
+     * @param $key
+     * @param $configurable
+     * @param $configurable_id
+     * @return void
+     */
+    protected function unsetValue($key, $configurable = null, $configurable_id = null)
     {
         $k = $configurable ? $configurable . ':' . $key : $key;
         
@@ -244,7 +262,7 @@ class EasyCfg implements ProviderContract
                 ->whereNull('configurable')
                 ->first();
             
-            return $this->cfg[$key] = $this->value($result);
+            return $this->setValue($key, $result);
         } elseif ($configurable_id === null) {
             $result = DB::table(config('easycfg.table'))
                 ->select('value')
@@ -253,7 +271,7 @@ class EasyCfg implements ProviderContract
                 ->whereNull('configurable_id')
                 ->first();
             
-            return $this->cfg[$configurable . ':' . $key] = $this->value($result);
+            return $this->setValue($key, $result, $configurable);
         } else {
             $result = DB::table(config('easycfg.table'))
                 ->select('value')
@@ -262,7 +280,7 @@ class EasyCfg implements ProviderContract
                 ->where('configurable_id', $configurable_id)
                 ->first();
             
-            return $this->cfg_id[$configurable . ':' . $key][$configurable_id] = $this->value($result);
+            return $this->setValue($key, $result, $configurable, $configurable_id);
         }
     }
     
@@ -283,6 +301,8 @@ class EasyCfg implements ProviderContract
         if ($value instanceof Closure) {
             $value = $value();
         }
+        
+        $this->setValue($key, $value, $configurable, $configurable_id);
         
         if (is_array($value) || is_object($value)) {
             $value = json_encode($value);
