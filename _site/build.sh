@@ -1,5 +1,7 @@
 #!/bin/bash
-
+    
+    cd /Users/CupOfTea696/Documents/_Work/EasyCfg
+    
     # Build the site
     echo "build start"
     jekyll build
