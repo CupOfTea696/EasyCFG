@@ -22,7 +22,7 @@ With EasyCfg, saving data related to other things, wether it is on your Applicat
 ## Quickstart
 
 ```bash
-$ composer require cupoftea/easycfg ^1.0
+$ composer require cupoftea/easycfg ^1.1
 ```
 
 ```php
@@ -39,6 +39,25 @@ $value = cfg('key', MyConfigurableCommand::class);
 cfg()->set('key', 'value', $myObject);
 cfg()->set('foo', 'bar', MyConfigurableClass::class, $myObject->id);
 $cfg = cfg()->all($myObject);
+
+
+// Settings in Blade partials
+
+// app.blade.php
+<div class="content @cfg('scheme')-scheme">
+    @yield('content')
+</div>
+
+// page.blade.php
+@cfg('scheme', 'dark')
+@section('content')
+    ...
+@endsection
+
+// Rendered HTML
+<div class="content dark-scheme">
+    ...
+</div>
 ```
 
 ## Features
