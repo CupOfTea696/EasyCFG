@@ -1,5 +1,7 @@
 <?php namespace CupOfTea\EasyCfg;
 
+use Blade;
+
 use CupOfTea\EasyCfg\Contracts\Provider as ProviderContract;
 
 use Illuminate\Support\ServiceProvider;
@@ -12,7 +14,7 @@ class EasyCfgServiceProvider extends ServiceProvider
      *
      * @var bool
      */
-    protected $defer = true;
+    protected $defer = false;
     
     /**
      * Available commands in this package
