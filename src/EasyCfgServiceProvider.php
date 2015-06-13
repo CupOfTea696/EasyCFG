@@ -1,6 +1,5 @@
 <?php namespace CupOfTea\EasyCfg;
 
-use CupOfTea\EasyCfg\EasyCfg;
 use CupOfTea\EasyCfg\Contracts\Provider as ProviderContract;
 
 use Illuminate\Support\ServiceProvider;
@@ -38,6 +37,8 @@ class EasyCfgServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__.'/../config/easycfg.php' => config_path('easycfg.php'),
         ], 'config');
+        
+        Blade::extend([with(new Compiler), 'compile']);
     }
     
     /**
