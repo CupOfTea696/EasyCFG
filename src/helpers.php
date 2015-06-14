@@ -2,6 +2,8 @@
 
 if (!function_exists('cfg')) {
     /**
+     * EasyCfg Helper.
+     *
      * @param  mixed  $key
      * @param  mixed  $configurable
      * @param  mixed  $configurable_id
