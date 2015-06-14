@@ -17,15 +17,6 @@ class EasyCfgServiceProvider extends ServiceProvider
     protected $defer = false;
     
     /**
-     * Available commands in this package
-     *
-     * @var array
-     */
-    protected $commands = [
-        
-    ];
-    
-    /**
      * Bootstrap the application events.
      *
      * @return void

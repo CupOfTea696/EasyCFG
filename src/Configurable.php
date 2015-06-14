@@ -8,21 +8,21 @@ use CupOfTea\EasyCfg\Contracts\Provider as ProviderContract;
 
 trait Configurable
 {
-
+    
     /**
      * Object Config items.
      *
      * @var array
      */
     public $_cupoftea_easy_cfg = [];
-
+    
     /**
      * If EasyCfg is observing Model Events.
      *
      * @var bool
      */
     private $_cupoftea_easy_cfg_observing = false;
-
+    
     /**
      * Model Database fields.
      *
@@ -48,7 +48,7 @@ trait Configurable
     /**
 	 * Dynamically retrieve attributes on the Class.
 	 *
-	 * @param  string  $key
+	 * @param  string $key
 	 * @return mixed
 	 */
     public function __get($key)
@@ -73,8 +73,8 @@ trait Configurable
 	/**
 	 * Dynamically set attributes on the Class.
 	 *
-	 * @param  string  $key
-	 * @param  mixed   $value
+	 * @param  string $key
+	 * @param  mixed  $value
 	 * @return void
 	 */
 	public function __set($key, $value)
@@ -119,7 +119,7 @@ trait Configurable
     /**
 	 * Dynamically remove attributes on the Class.
 	 *
-	 * @param  string  $key
+	 * @param  string $key
 	 * @return mixed
 	 */
     function __unset($key)

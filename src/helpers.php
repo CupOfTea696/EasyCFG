@@ -2,9 +2,9 @@
 
 if (!function_exists('cfg')) {
     /**
-     * @param null $key
-     * @param null $configurable
-     * @param null $configurable_id
+     * @param  mixed  $key
+     * @param  mixed  $configurable
+     * @param  mixed  $configurable_id
      * @return mixed
      */
     function cfg($key = null, $configurable = null, $configurable_id = null)

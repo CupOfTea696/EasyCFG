@@ -6,8 +6,8 @@ class Compiler
     /**
      * Compile @cfg directives.
      *
-     * @param $value
-     * @return mixed
+     * @param  string $value
+     * @return string
      */
     public function compile($value)
     {

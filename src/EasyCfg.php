@@ -26,7 +26,7 @@ class EasyCfg implements ProviderContract
      * @const string
      */
     const VERSION = '1.1.1';
-
+    
     /**
      * Cached all queries
      *
@@ -63,7 +63,7 @@ class EasyCfg implements ProviderContract
         if (is_a(Application::class, $configurable)) {
             return null;
         }
-
+        
         if (is_object($configurable)) {
             return get_class($configurable);
         }
@@ -94,7 +94,7 @@ class EasyCfg implements ProviderContract
     /**
      * Map all query result to Array
      *
-     * @param $all
+     * @param  array  $all
      * @return array
      */
     protected function mapAll($all)
@@ -110,8 +110,8 @@ class EasyCfg implements ProviderContract
     /**
      * Get cached all query
      *
-     * @param $k
-     * @param $id
+     * @param  mixed  $k
+     * @param  mixed  $id
      * @return mixed
      */
     protected function getValues($k = null, $id = null)
@@ -128,8 +128,8 @@ class EasyCfg implements ProviderContract
     /**
      * Unset cached all query
      *
-     * @param $k
-     * @param $id
+     * @param  mixed  $k
+     * @param  mixed  $id
      * @return void
      */
     protected function unsetValues($k = null, $id = null)
@@ -152,9 +152,9 @@ class EasyCfg implements ProviderContract
     /**
      * Get cached get query
      *
-     * @param $key
-     * @param $configurable
-     * @param $configurable_id
+     * @param  string $key
+     * @param  mixed  $configurable
+     * @param  mixed  $configurable_id
      * @return mixed
      */
     protected function getValue($key, $configurable = null, $configurable_id = null)
@@ -171,9 +171,10 @@ class EasyCfg implements ProviderContract
     /**
      * Set cached get query
      *
-     * @param $key
-     * @param $configurable
-     * @param $configurable_id
+     * @param  string $key
+     * @param  mixed  $result
+     * @param  mixed  $configurable
+     * @param  mixed  $configurable_id
      * @return mixed
      */
     protected function setValue($key, $result, $configurable = null, $configurable_id = null)
@@ -191,9 +192,9 @@ class EasyCfg implements ProviderContract
     /**
      * Unset cached get query
      *
-     * @param $key
-     * @param $configurable
-     * @param $configurable_id
+     * @param  string $key
+     * @param  mixed  $configurable
+     * @param  mixed  $configurable_id
      * @return void
      */
     protected function unsetValue($key, $configurable = null, $configurable_id = null)
@@ -214,7 +215,7 @@ class EasyCfg implements ProviderContract
     /**
      * Get Config key from result
      *
-     * @param $result
+     * @param  mixed  $result
      * @return mixed
      */
     protected function key($result)
@@ -229,7 +230,7 @@ class EasyCfg implements ProviderContract
     /**
      * Get Config value from result
      *
-     * @param $result
+     * @param  mixed  $result
      * @return mixed
      */
     protected function value($result)
