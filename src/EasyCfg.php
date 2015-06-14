@@ -25,7 +25,7 @@ class EasyCfg implements ProviderContract
      *
      * @const string
      */
-    const VERSION = '1.1.0';
+    const VERSION = '1.1.1';
 
     /**
      * Cached all queries
