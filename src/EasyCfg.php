@@ -15,16 +15,41 @@ class EasyCfg implements ProviderContract
     use Package;
     
     /**
-     * Package Info
+     * Package Name
      *
      * @const string
      */
     const PACKAGE = 'CupOfTea/EasyCfg';
+    /**
+     * Package Version
+     *
+     * @const string
+     */
     const VERSION = '1.1.0';
-    
+
+    /**
+     * Cached all queries
+     *
+     * @var array
+     */
     protected $all = [];
+    /**
+     * Cached get queries
+     *
+     * @var array
+     */
     protected $cfg = [];
+    /**
+     * Cached all queries on id-able items
+     *
+     * @var array
+     */
     protected $all_id = [];
+    /**
+     * Cached get queries on id-able items
+     *
+     * @var array
+     */
     protected $cfg_id = [];
     
     /**
@@ -67,6 +92,8 @@ class EasyCfg implements ProviderContract
     }
     
     /**
+     * Map all query result to Array
+     *
      * @param $all
      * @return array
      */
@@ -81,6 +108,8 @@ class EasyCfg implements ProviderContract
     }
     
     /**
+     * Get cached all query
+     *
      * @param $k
      * @param $id
      * @return mixed
@@ -97,6 +126,8 @@ class EasyCfg implements ProviderContract
     }
     
     /**
+     * Unset cached all query
+     *
      * @param $k
      * @param $id
      * @return void
@@ -119,6 +150,8 @@ class EasyCfg implements ProviderContract
     }
     
     /**
+     * Get cached get query
+     *
      * @param $key
      * @param $configurable
      * @param $configurable_id
@@ -136,6 +169,8 @@ class EasyCfg implements ProviderContract
     }
     
     /**
+     * Set cached get query
+     *
      * @param $key
      * @param $configurable
      * @param $configurable_id
@@ -154,6 +189,8 @@ class EasyCfg implements ProviderContract
     }
     
     /**
+     * Unset cached get query
+     *
      * @param $key
      * @param $configurable
      * @param $configurable_id
@@ -175,7 +212,9 @@ class EasyCfg implements ProviderContract
     }
     
     /**
-     * @param $value
+     * Get Config key from result
+     *
+     * @param $result
      * @return mixed
      */
     protected function key($result)
@@ -188,7 +227,9 @@ class EasyCfg implements ProviderContract
     }
     
     /**
-     * @param $value
+     * Get Config value from result
+     *
+     * @param $result
      * @return mixed
      */
     protected function value($result)

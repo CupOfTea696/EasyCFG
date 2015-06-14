@@ -8,10 +8,26 @@ use CupOfTea\EasyCfg\Contracts\Provider as ProviderContract;
 
 trait Configurable
 {
-    
+
+    /**
+     * Object Config items.
+     *
+     * @var array
+     */
     public $_cupoftea_easy_cfg = [];
+
+    /**
+     * If EasyCfg is observing Model Events.
+     *
+     * @var bool
+     */
     private $_cupoftea_easy_cfg_observing = false;
-    
+
+    /**
+     * Model Database fields.
+     *
+     * @var array
+     */
     protected $fields = [];
     
     /**
