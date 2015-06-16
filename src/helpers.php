@@ -12,9 +12,9 @@ if (!function_exists('cfg')) {
     function cfg($key = null, $configurable = null, $configurable_id = null)
     {
         if ($key === null) {
-            return Cfg::getFacadeRoot();
+            return app('CupOfTea\EasyCfg\Contracts\Provider');
         } else {
-            return Cfg::get($key, $configurable, $configurable_id);
+            return app('CupOfTea\EasyCfg\Contracts\Provider')->get($key, $configurable, $configurable_id);
         }
     }
 }
