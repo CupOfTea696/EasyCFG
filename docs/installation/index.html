@@ -1,0 +1,29 @@
+<!DOCTYPE html><html lang="en-us" id="easycfg"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>EasyCFG by CupOfTea696</title><base href="http://easycfg.cupoftea.io"><link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'><link rel="stylesheet" href="/assets/css/app.css?cb=54a7cd6d3ae3098bd8bcd378b856517a"></head><body> <nav class="nav"> <section class="nav/left"> <a href="" class="nav/item">EasyCFG</a> </section> <section class="nav/right"> <a href="docs" class="nav/item">Documentation</a> <a href="docs/api" class="nav/item">API</a> </section> </nav><section class="main-content" id="docs-installation"><div class="body clearfix"><ol class="breadcrumb"><li class="breadcrumb/item"> <a href="">Home</a></li><li class="breadcrumb/item"> <a href="docs">Documentation</a></li><li class="breadcrumb/item --active">Installation</li></ol> <aside class="sidebar"> <nav><ul class="sidebar/nav"><li class="sidebar/nav/category">Getting Started</li><li class="sidebar/nav/item --active">Installation</li><li class="sidebar/nav/item"> <a href="docs/configuration">Configuration</a></li><li class="sidebar/nav/category">Usage</li><li class="sidebar/nav/item"> <a href="docs/usage">Using EasyCFG</a></li><li class="sidebar/nav/item"> <a href="docs/relate">Relating to Objects</a></li><li class="sidebar/nav/item"> <a href="docs/helper">Helper Function</a></li><li class="sidebar/nav/item"> <a href="docs/blade">Blade Directive</a></li></ul> </nav> </aside><main id="content" class="page"><h1 id="installation">Installation</h1><ul class="toc"><li class="toc/item"><a data-scrollto="install-composer">Install Composer</a></li><li class="toc/item"> <a data-scrollto="install-easycfg">Install EasyCFG</a><ul class="toc/level toc"><li class="toc/item"><a data-scrollto="install-via-composer">Install via Composer</a></li><li class="toc/item"><a data-scrollto="setting-up-easycfg">Setting up EasyCFG</a></li><li class="toc/item"><a data-scrollto="database-migrations">Database Migrations</a></li></ul></li></ul><h2 id="install-composer">Install Composer</h2><p>To install TwoStream, you will first need to install <a href="https://getcomposer.org/doc/00-intro.md">Composer</a> if you haven't already.</p><h2 id="install-easycfg">Install EasyCFG</h2><h3 id="install-via-composer">Install via Composer</h3><p>To install EasyCFG, simply require it with Composer.</p><div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>composer require cupoftea/easycfg ^1.1
+</code></pre></div><h3 id="setting-up-easycfg">Setting up EasyCFG</h3><p>You will need to add the following service providers to your <code>config/app.php</code>:</p><div class="highlight"><pre><code class="language-php" data-lang="php">    <span class="s1">'providers'</span> <span class="o">=&gt;</span> <span class="p">[</span>
+
+        <span class="cm">/*</span>
+<span class="cm">         * Laravel Framework Service Providers...</span>
+<span class="cm">         */</span>
+
+        <span class="s1">'Illuminate\Foundation\Providers\ArtisanServiceProvider'</span><span class="p">,</span>
+        <span class="s1">'Illuminate\Auth\AuthServiceProvider'</span><span class="p">,</span>
+        <span class="s1">'Illuminate\Bus\BusServiceProvider'</span><span class="p">,</span>
+
+        <span class="o">...</span>
+
+        <span class="s1">'CupOfTea\EasyCFG\EasyCFGServiceProvider'</span><span class="p">,</span>
+
+    <span class="p">],</span>
+</code></pre></div><p>Optionally you can also add the EasyCFG Facade if you wish to use it.</p><div class="highlight"><pre><code class="language-php" data-lang="php">    <span class="s1">'aliases'</span> <span class="o">=&gt;</span> <span class="p">[</span>
+
+        <span class="s1">'App'</span>       <span class="o">=&gt;</span> <span class="s1">'Illuminate\Support\Facades\App'</span><span class="p">,</span>
+        <span class="s1">'Artisan'</span>   <span class="o">=&gt;</span> <span class="s1">'Illuminate\Support\Facades\Artisan'</span><span class="p">,</span>
+        <span class="s1">'Auth'</span>      <span class="o">=&gt;</span> <span class="s1">'Illuminate\Support\Facades\Auth'</span><span class="p">,</span>
+
+        <span class="o">...</span>
+
+        <span class="s1">'EasyCFG'</span> <span class="o">=&gt;</span> <span class="s1">'CupOfTea\TwoStream\Facades\EasyCFG'</span><span class="p">,</span>
+
+    <span class="p">],</span>
+</code></pre></div><h3 id="database-migrations">Database Migrations</h3><p>Lastly you will need to run the EasyCFG migrations. First publish them with the following command:</p><div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>php artisan vendor:publish --provider<span class="o">=</span><span class="s2">"cupoftea/easycfg"</span> --tag<span class="o">=</span><span class="s2">"migrations"</span>
+</code></pre></div><p>Now just run <code>php artisan migrate</code> and you're all set!</p><p><u><strong>Note:</strong> If you wish to change the default Database Table name, you need to change this in the <a href="http://easycfg.cupoftea.io/docs/configuration">Configuration</a> before running the migrations.</u></p> </main></div> <footer class="site-footer"> <span class="site-footer-owner"> <a href="https://github.com/CupOfTea696/EasyCFG/">EasyCFG</a> is maintained by <a href="https://github.com/CupOfTea696">CupOfTea696</a>. </span> </footer> </section> <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script><script src="/assets/js/app.js?cb=d735cbd9e60a21104256df7ee8382009"></script></body></html>
