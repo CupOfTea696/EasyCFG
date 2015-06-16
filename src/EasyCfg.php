@@ -8,6 +8,7 @@ use CupOfTea\EasyCfg\Exceptions\InvalidKeyException;
 use CupOfTea\EasyCfg\Contracts\Provider as ProviderContract;
 
 use Illuminate\Foundation\Application;
+use Illuminate\Database\Eloquent\Model;
 
 class EasyCfg implements ProviderContract
 {
@@ -82,6 +83,10 @@ class EasyCfg implements ProviderContract
     {
         if($configurable_id !== null){
             return $configurable_id;
+        }
+        
+        if (is_a($configurable, Model::class)) {
+            return $configurable->primaryKey;
         }
         
         if (is_object($configurable) && isset($configurable->id)) {
