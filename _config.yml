@@ -16,6 +16,23 @@ navigation:
       - name: Installation
         type: page
         url: "installation"
+      - name: Configuration
+        type: page
+        url: "configuration"
+      - name: Usage
+        type: category
+      - name: Using EasyCFG
+        type: page
+        url: "usage"
+      - name: Relating to Objects
+        type: page
+        url: "relate"
+      - name: Helper Function
+        type: page
+        url: "helper"
+      - name: Blade Directive
+        type: page
+        url: "blade"
   - name: API
     url: "docs/api"
 url: "http://easycfg.cupoftea.io"
