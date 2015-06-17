@@ -1,7 +1,0 @@
-[submodule "_plugins/asset_bundler"]
-	path = _plugins/asset_bundler
-	url = git://github.com/moshen/jekyll-asset_bundler.git
-
-[submodule "jekyll-asset_bundler"]
-	path = jekyll-asset_bundler
-	url = https://github.com/moshen/jekyll-asset_bundler.git
