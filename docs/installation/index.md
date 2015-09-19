@@ -7,7 +7,7 @@ layout: default
 
 ## Install Composer
 
-To install TwoStream, you will first need to install [Composer](https://getcomposer.org/doc/00-intro.md) if you haven't already.
+To install EasyCfg, you will first need to install [Composer](https://getcomposer.org/doc/00-intro.md) if you haven't already.
 
 
 ## Install EasyCFG
