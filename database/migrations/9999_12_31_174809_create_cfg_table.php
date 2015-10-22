@@ -3,8 +3,8 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCfgTable extends Migration {
-
+class CreateCfgTable extends Migration
+{
     /**
      * Run the migrations.
      *
@@ -12,7 +12,7 @@ class CreateCfgTable extends Migration {
      */
     public function up()
     {
-        Schema::create(config('easycfg.table'), function(Blueprint $table) {
+        Schema::create(config('easycfg.table'), function (Blueprint $table) {
             $table->increments('id');
             $table->string('key', 128);
             $table->text('value');
@@ -30,5 +30,4 @@ class CreateCfgTable extends Migration {
     {
         Schema::drop(config('easycfg.table'));
     }
-
 }
