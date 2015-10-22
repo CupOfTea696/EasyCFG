@@ -1,6 +1,6 @@
 <?php
 
-if (!function_exists('cfg')) {
+if (! function_exists('cfg')) {
     /**
      * EasyCfg Helper.
      *

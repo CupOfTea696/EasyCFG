@@ -2,52 +2,49 @@
 
 use DB;
 use Closure;
-
 use CupOfTea\Package\Package;
 use CupOfTea\EasyCfg\Exceptions\InvalidKeyException;
 use CupOfTea\EasyCfg\Contracts\Provider as ProviderContract;
-
 use Illuminate\Foundation\Application;
 use Illuminate\Database\Eloquent\Model;
 
 class EasyCfg implements ProviderContract
 {
-    
     use Package;
     
     /**
-     * Package Name
+     * Package Name.
      *
      * @const string
      */
     const PACKAGE = 'CupOfTea/EasyCfg';
     /**
-     * Package Version
+     * Package Version.
      *
      * @const string
      */
     const VERSION = '1.1.2';
     
     /**
-     * Cached all queries
+     * Cached all queries.
      *
      * @var array
      */
     protected $all = [];
     /**
-     * Cached get queries
+     * Cached get queries.
      *
      * @var array
      */
     protected $cfg = [];
     /**
-     * Cached all queries on id-able items
+     * Cached all queries on id-able items.
      *
      * @var array
      */
     protected $all_id = [];
     /**
-     * Cached get queries on id-able items
+     * Cached get queries on id-able items.
      *
      * @var array
      */
@@ -62,7 +59,7 @@ class EasyCfg implements ProviderContract
     protected function getConfigurable($configurable)
     {
         if (is_a(Application::class, $configurable)) {
-            return null;
+            return;
         }
         
         if (is_object($configurable)) {
@@ -81,7 +78,7 @@ class EasyCfg implements ProviderContract
      */
     protected function getConfigurableId($configurable, $configurable_id)
     {
-        if($configurable_id !== null){
+        if ($configurable_id !== null) {
             return $configurable_id;
         }
         
@@ -97,7 +94,7 @@ class EasyCfg implements ProviderContract
     }
     
     /**
-     * Map all query result to Array
+     * Map all query result to Array.
      *
      * @param  array  $all
      * @return array
@@ -113,7 +110,7 @@ class EasyCfg implements ProviderContract
     }
     
     /**
-     * Get cached all query
+     * Get cached all query.
      *
      * @param  mixed  $k
      * @param  mixed  $id
@@ -131,7 +128,7 @@ class EasyCfg implements ProviderContract
     }
     
     /**
-     * Unset cached all query
+     * Unset cached all query.
      *
      * @param  mixed  $k
      * @param  mixed  $id
@@ -144,7 +141,7 @@ class EasyCfg implements ProviderContract
                 unset($this->all[Application::class]);
             }
         } elseif ($id === null) {
-            if (isset($this->all[$k])){
+            if (isset($this->all[$k])) {
                 unset($this->all[$k]);
             }
         } else {
@@ -155,7 +152,7 @@ class EasyCfg implements ProviderContract
     }
     
     /**
-     * Get cached get query
+     * Get cached get query.
      *
      * @param  string $key
      * @param  mixed  $configurable
@@ -174,7 +171,7 @@ class EasyCfg implements ProviderContract
     }
     
     /**
-     * Set cached get query
+     * Set cached get query.
      *
      * @param  string $key
      * @param  mixed  $result
@@ -195,7 +192,7 @@ class EasyCfg implements ProviderContract
     }
     
     /**
-     * Unset cached get query
+     * Unset cached get query.
      *
      * @param  string $key
      * @param  mixed  $configurable
@@ -211,48 +208,48 @@ class EasyCfg implements ProviderContract
                 unset($this->cfg_id[$k][$configurable_id]);
             }
         } else {
-            if (isset($this->cfg[$k])){
+            if (isset($this->cfg[$k])) {
                 unset($this->cfg[$k]);
             }
         }
     }
     
     /**
-     * Get Config key from result
+     * Get Config key from result.
      *
      * @param  mixed  $result
      * @return mixed
      */
     protected function key($result)
     {
-        if ($result === null || !isset($result->key)) {
-            return null;
+        if ($result === null || ! isset($result->key)) {
+            return;
         }
         
         return $result->key;
     }
     
     /**
-     * Get Config value from result
+     * Get Config value from result.
      *
      * @param  mixed  $result
      * @return mixed
      */
     protected function value($result)
     {
-        if ($result === null || !isset($result->value)) {
-            return null;
+        if ($result === null || ! isset($result->value)) {
+            return;
         } else {
             $value = $result->value;
         }
         
         $json = json_decode($value);
         
-        return $json ? $json : (string)$value;
+        return $json ? $json : (string) $value;
     }
     
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function all($configurable = null, $configurable_id = null)
     {
@@ -280,7 +277,7 @@ class EasyCfg implements ProviderContract
             $result = DB::table(config('easycfg.table'))
                 ->where('configurable', $configurable)
                 ->whereNull('configurable_id')
-                ->orWhere(function($query) use ($configurable, $configurable_id) {
+                ->orWhere(function ($query) use ($configurable, $configurable_id) {
                     $query->where('configurable', $configurable)
                           ->where('configurable_id', $configurable_id);
                 })
@@ -291,7 +288,7 @@ class EasyCfg implements ProviderContract
     }
     
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function get($key, $configurable = null, $configurable_id = null)
     {
@@ -332,7 +329,7 @@ class EasyCfg implements ProviderContract
     }
     
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function set($key, $value, $configurable = null, $configurable_id = null)
     {
@@ -355,7 +352,7 @@ class EasyCfg implements ProviderContract
             $value = json_encode($value);
         }
         
-        $value = (string)$value;
+        $value = (string) $value;
         
         if ($configurable === null) {
             if ($this->get($key)) {
@@ -390,7 +387,7 @@ class EasyCfg implements ProviderContract
     }
     
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function delete($key, $configurable = null, $configurable_id = null)
     {
@@ -420,7 +417,7 @@ class EasyCfg implements ProviderContract
     }
     
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function deleteAll($configurable = null, $configurable_id = null)
     {
@@ -445,5 +442,4 @@ class EasyCfg implements ProviderContract
                 ->delete();
         }
     }
-    
 }

@@ -2,7 +2,6 @@
 
 interface Provider
 {
-    
     /**
      * Get all Configuration values for a Configurable item.
      *
@@ -20,7 +19,7 @@ interface Provider
      * @param  mixed  $configurable_id
      * @return mixed
      */
-	public function get($key, $configurable = null, $configurable_id = null);
+    public function get($key, $configurable = null, $configurable_id = null);
     
     /**
      * Set a Configuration value.
@@ -31,7 +30,7 @@ interface Provider
      * @param  mixed  $configurable_id
      * @return mixed
      */
-	public function set($key, $value, $configurable = null, $configurable_id = null);
+    public function set($key, $value, $configurable = null, $configurable_id = null);
     
     /**
      * Delete a Configuration value.
@@ -51,5 +50,4 @@ interface Provider
      * @return int
      */
     public function deleteAll($configurable = null, $configurable_id = null);
-    
 }

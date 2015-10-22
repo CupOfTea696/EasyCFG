@@ -1,14 +1,11 @@
 <?php namespace CupOfTea\EasyCfg;
 
 use Blade;
-
 use CupOfTea\EasyCfg\Contracts\Provider as ProviderContract;
-
 use Illuminate\Support\ServiceProvider;
 
 class EasyCfgServiceProvider extends ServiceProvider
 {
-    
     /**
      * Indicates if loading of the provider is deferred.
      *
@@ -24,11 +21,11 @@ class EasyCfgServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->publishes([
-            __DIR__.'/../database/migrations/' => base_path('/database/migrations')
+            __DIR__ . '/../database/migrations/' => base_path('/database/migrations'),
         ], 'migrations');
         
         $this->publishes([
-            __DIR__.'/../config/easycfg.php' => config_path('easycfg.php'),
+            __DIR__ . '/../config/easycfg.php' => config_path('easycfg.php'),
         ], 'config');
         
         Blade::extend([with(new Compiler), 'compile']);
@@ -42,7 +39,7 @@ class EasyCfgServiceProvider extends ServiceProvider
     public function register()
     {
         $this->mergeConfigFrom(
-            __DIR__.'/../config/easycfg.php', 'easycfg'
+            __DIR__ . '/../config/easycfg.php', 'easycfg'
         );
         
         $this->app->singleton(ProviderContract::class, EasyCfg::class);
@@ -59,5 +56,4 @@ class EasyCfgServiceProvider extends ServiceProvider
             ProviderContract::class,
         ];
     }
-    
 }
